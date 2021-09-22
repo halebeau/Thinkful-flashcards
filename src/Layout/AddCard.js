@@ -1,43 +1,72 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useRouteMatch, Link } from "react-router-dom";
-import { readDeck } from "../utils/api";
-import AddEditCardForm from "./AddEditCardForm";
+import React, { useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { readDeck, createCard } from "../utils/api/index";
+import CardForm from "./CardForm";
 
-function AddCard() {
-  const { path } = useRouteMatch();
+function AddCard({ deck, setDeck, card, setCard }) {
+  const history = useHistory();
   const { deckId } = useParams();
 
-  const [deck, setDeck] = useState({});
-
-
   useEffect(() => {
-    const abortController = new AbortController();
-    async function readTheDeck() {
-
-      try {
-        const response = await readDeck(deckId, abortController.signal);
-        setDeck(response);
-      } catch (err) {
-        console.log(err, "Failure reading deck");
-      }
+    async function loadDecks() {
+      const loadedDeck = await readDeck(deckId);
+      setDeck(loadedDeck);
     }
+    loadDecks();
+  }, [deckId, setDeck]);
 
-    readTheDeck();
-    return () => abortController.abort();
-  }, [deckId]);
+  function changeFront(event) {
+    setCard({ ...card, front: event.target.value });
+  }
+
+  function changeBack(event) {
+    setCard({ ...card, back: event.target.value });
+  }
+
+  function handleDone() {
+    history.push(`/decks/${deck.id}`);
+  }
+
+  function handleSave(event) {
+    event.preventDefault();
+    async function updateCard() {
+      await createCard(deckId, card);
+    }
+    updateCard();
+    setCard({
+      front: "",
+      back: "",
+      deckId: deckId,
+    });
+  }
 
   return (
-    <React.Fragment>
-      <p className="card" style={{ backgroundColor: "lightgray" }}>
-        <span>
-          <Link to="/">Home</Link> /
-          <Link to={`/decks/${deck.id}`}> {deck.name}</Link> /{" "}
-          <Link to={path}> Add Card</Link>
-        </span>
-      </p>
-      <h1>{deck.name}</h1>
-      <AddEditCardForm />
-    </React.Fragment>
+    <div>
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <a href="/">Home</a>
+          </li>
+          <li className="breadcrumb-item">
+            <a href={`/decks/${deck.id}`}>{deck.name}</a>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            Add Card
+          </li>
+        </ol>
+      </nav>
+      <div>
+        <h1>{deck.name}: Add Card</h1>
+        <CardForm
+          changeFront={changeFront}
+          changeBack={changeBack}
+          handleSave={handleSave}
+          handleDoneCancel={handleDone}
+          cardValueFront="Front side of the card"
+          cardValueBack="Back side of the card"
+        />
+      </div>
+    </div>
   );
 }
 

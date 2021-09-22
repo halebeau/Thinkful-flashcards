@@ -4,6 +4,11 @@
       "name": "aerer",
       "description": "aaaaa",
       "id": 2
+    },
+    {
+      "name": "First Deck",
+      "description": "Testing",
+      "id": 3
     }
   ],
   "cards": [
@@ -36,6 +41,12 @@
       "front": "aaere",
       "back": "aaaaa",
       "id": 5
+    },
+    {
+      "deckId": 3,
+      "front": "First Card",
+      "back": "Back of first card",
+      "id": 6
     }
   ]
 }
