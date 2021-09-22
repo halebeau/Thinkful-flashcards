@@ -1,8 +1,8 @@
    import React from "react";
    import { useHistory } from "react-router";
 
-   function NotEnoughCards({ deck }) {
-   const history = useHistory();
+function NotEnoughCards({ deck }) {
+const history = useHistory();
 
    function addCardHandler() {
       history.push(`/decks/${deck.id}/cards/new`);
@@ -26,17 +26,18 @@
          <h1>Study: {deck.name}</h1>
          <h3>Not enough cards.</h3>
          <p>
-         You need at least 3 cards to study. There are {deck.cards.length} cards in
-         this deck.
+            You need at least 3 cards to study. There are {deck?.cards?.length}{" "}
+            cards in this deck.
          </p>
          <button
          className="btn btn-primary"
          type="button"
-         onClick={addCardHandler}>
+         onClick={addCardHandler}
+         >
          Add Cards
          </button>
       </div>
    );
 }
 
-export default NotEnoughCards;
+   export default NotEnoughCards;

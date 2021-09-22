@@ -1,52 +1,10 @@
 {
   "decks": [
     {
-      "name": "aerer",
-      "description": "aaaaa",
-      "id": 2
-    },
-    {
-      "name": "First Deck",
+      "name": "Test",
       "description": "Testing",
-      "id": 3
+      "id": 1
     }
   ],
-  "cards": [
-    {
-      "deckId": 2,
-      "front": "erere",
-      "back": "aaa",
-      "id": 1
-    },
-    {
-      "deckId": 2,
-      "front": "aer",
-      "back": "aere",
-      "id": 2
-    },
-    {
-      "deckId": 2,
-      "front": "aeere",
-      "back": "aaaaaa",
-      "id": 3
-    },
-    {
-      "deckId": 2,
-      "front": "aereare",
-      "back": "ererererere",
-      "id": 4
-    },
-    {
-      "deckId": 2,
-      "front": "aaere",
-      "back": "aaaaa",
-      "id": 5
-    },
-    {
-      "deckId": 3,
-      "front": "First Card",
-      "back": "Back of first card",
-      "id": 6
-    }
-  ]
+  "cards": []
 }

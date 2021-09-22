@@ -1,86 +1,96 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useHistory, useRouteMatch, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import { readDeck, updateDeck } from "../utils/api/index";
 
-function EditDeck() {
-  const { path } = useRouteMatch();
-  const { deckId } = useParams(); //get the current deck's id for input placeholder data
-  const [deck, setDeck] = useState({}); //incoming deck
-
+function EditDeck({ deck, setDeck }) {
   const history = useHistory();
+  const { deckId } = useParams();
 
   useEffect(() => {
-    const abortController = new AbortController();
-    async function readTheDeck() {
-      try {
-        const response = await readDeck(deckId, abortController.signal);
-        setDeck(response); //get current deck information
-      } catch (err) {
-        console.log(err, "Reading the deck list failed");
-      }
+    async function loadDecks() {
+      const loadedDeck = await readDeck(deckId);
+      setDeck(loadedDeck);
     }
-    readTheDeck();
-    return () => abortController.abort();
-  }, [deckId]);
+    loadDecks();
+  }, [deckId, setDeck]);
 
-  const onChangeHandler = (event) => {
-    setDeck({ ...deck, [event.target.id]: event.target.value }); //set our deck with new information according to form
-  };
+  function changeName(event) {
+    setDeck({ ...deck, name: event.target.value });
+  }
 
-  const onSubmitHandler = (event) => {
+  function changeDesc(event) {
+    setDeck({ ...deck, description: event.target.value });
+  }
+
+  function saveHandler(event) {
     event.preventDefault();
-    console.log("submit form");
-    async function updateTheDeck() {
-      try {
-        await updateDeck(deck);
-        //what can we use response for?
-        history.push(`/decks/${deckId}`); //push our user to the url of the newly created deck
-      } catch (err) {
-        console.log(err, "Updating the deck failed");
-      }
-    }
-    updateTheDeck();
-  };
+    updateDeck(deck).then((response) => history.push(`/decks/${deck.id}`));
+  }
+
+  function handleCancel() {
+    history.push(`/decks/${deck.id}`);
+  }
+
   return (
-    <React.Fragment>
-      <p className="card" style={{ backgroundColor: "lightgray" }}>
-        <span>
-          <Link to="/">Home</Link> /<Link to={`/decks/${deck.id}`}> {deck.name}</Link> / <Link to={path}> Edit Deck</Link>
-        </span>
-      </p>
-      <h1>Edit Deck</h1>
-      <form onSubmit={onSubmitHandler}>
-        <label htmlFor="name">Name</label>
-        <br />
-        <input
-          type="text"
-          id="name"
-          style={{ width: "100%" }}
-          placeholder="Deck Name"
-          value={deck.name}
-          onChange={onChangeHandler}
-        />
-        <br />
-        <label htmlFor="description">Description</label>
-        <br />
-        <textarea
-          id="description"
-          style={{ width: "100%" }}
-          placeholder="Deck description"
-          value={deck.description}
-          onChange={onChangeHandler}
-        />
-        <br />
-        <Link to={`/decks/${deckId}`}>
-          <button className="btn btn-secondary" type="button">
+    <div>
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <a href="/">Home</a>
+            </li>
+            <li className="breadcrumb-item">
+              <a href={`/decks/${deckId}`}>{deck.name}</a>
+            </li>
+            <li className="breadcrumb-item active" aria-current="page">
+              Edit Deck
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <div>
+        <form>
+          <h1>Edit Deck</h1>
+          <div className="mb-3">
+            <label className="form-label">Name</label>
+            <textarea
+              type="text"
+              className="form-control"
+              id="front"
+              value={deck.name}
+              onChange={changeName}
+              rows="3"
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Description</label>
+            <textarea
+              className="form-control"
+              id="back"
+              value={deck.description}
+              onChange={changeDesc}
+              rows="3"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary"
+            onClick={handleCancel}
+          >
             Cancel
           </button>
-        </Link>
-        <button className="btn btn-primary" type="submit">
-          Submit
-        </button>
-      </form>
-    </React.Fragment>
+
+          <button
+            type="submit"
+            className="btn btn-primary"
+            onClick={saveHandler}
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 
