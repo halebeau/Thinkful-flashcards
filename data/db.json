@@ -4,7 +4,24 @@
       "name": "Test",
       "description": "Testing",
       "id": 1
+    },
+    {
+      "name": "Testing 2",
+      "description": "Give a description",
+      "id": 2
+    },
+    {
+      "name": "",
+      "description": "",
+      "id": 3
     }
   ],
-  "cards": []
+  "cards": [
+    {
+      "front": "Adding front Card",
+      "back": "Adding Back of Card",
+      "deckId": 1,
+      "id": 1
+    }
+  ]
 }

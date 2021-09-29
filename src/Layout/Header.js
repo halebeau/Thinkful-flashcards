@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 
-function Header() {
+const Header = () => {
   return (
     <header className="jumbotron bg-dark">
       <div className="container text-white">
@@ -8,7 +8,7 @@ function Header() {
         <p className="lead">Discover The Flashcard Difference.</p>
       </div>
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header
