@@ -1,10 +1,7 @@
 
-# Thinkful Flashcards
+# Flashcards Web App
 
 This is a front-end application project built in React and Javascript that allows a user to flip through decks of flashcards to test their knowledge.
-
-
-
 
 ## Features
 
