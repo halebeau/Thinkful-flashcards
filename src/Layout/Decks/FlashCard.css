@@ -1,0 +1,15 @@
+.front .front-text {
+  display: flex;
+}
+
+.front .back-text {
+  display: none;
+}
+
+.back .back-text {
+  display: flex;
+}
+
+.back .front-text {
+  display: none;
+}

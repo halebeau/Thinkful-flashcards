@@ -1,53 +1,54 @@
 import React, { useEffect, useState } from "react";
 
-function DeckForm({ handleSubmit, handleCancel, deck }) {
-  const [deckInfo, setDeckInfo] = useState(deck);
+function CardForm({ handleSubmit, handleCancel, card }) {
+  const [cardInfo, setCardInfo] = useState(card);
   useEffect(() => {
-    setDeckInfo(deck);
-  }, [deck]);
+    setCardInfo(card);
+  }, [card]);
   const updateForm = (event) => {
     const { name, value } = event.target;
-    setDeckInfo({ ...deckInfo, [name]: value });
+    setCardInfo({ ...cardInfo, [name]: value });
   };
   const submit = (event) => {
     event.preventDefault();
-    handleSubmit(deckInfo);
+    handleSubmit(cardInfo);
+    setCardInfo({});
   };
   return (
     <form onSubmit={submit}>
       <div className='form-group'>
-        <label htmlFor='name'>Name</label>
-        <input
-          className='form-control'
-          type='text'
-          id='name'
-          name='name'
-          placeholder='Deck Name'
-          value={deckInfo?.name || ""}
-          onChange={updateForm}
-          required
-        ></input>
-      </div>
-      <div className='form-group'>
-        <label htmlFor='description'>Description</label>
+        <label htmlFor='front'>Front</label>
         <textarea
           className='form-control'
-          name='description'
-          id='description'
-          placeholder='Brief description of the deck'
-          value={deckInfo?.description || ""}
+          type='text'
+          id='front'
+          name='front'
+          placeholder='Front side of card'
+          value={cardInfo?.front || ""}
+          onChange={updateForm}
+          required
+        ></textarea>
+      </div>
+      <div className='form-group'>
+        <label htmlFor='back'>Back</label>
+        <textarea
+          className='form-control'
+          name='back'
+          id='back'
+          placeholder='Back side of card'
+          value={cardInfo?.back || ""}
           onChange={updateForm}
           required
         ></textarea>
         <button className='btn btn-secondary my-2' onClick={handleCancel}>
-          Cancel
+          Done
         </button>
         <button type='submit' className='btn btn-primary my-2'>
-          Submit
+          Save
         </button>
       </div>
     </form>
   );
 }
 
-export default DeckForm;
+export default CardForm;

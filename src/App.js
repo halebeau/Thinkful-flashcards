@@ -8,9 +8,9 @@ import Layout from "./Layout";
 
 function App() {
   return (
-    <div className="app-routes">
+    <div className='app-routes'>
       <Switch>
-        <Route path="/">
+        <Route path='/'>
           <Layout />
         </Route>
       </Switch>

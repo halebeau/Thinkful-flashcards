@@ -1,0 +1,21 @@
+.card-toast.alert {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.card-toast.alert.show {
+  visibility: visible;
+  animation: fadeout 0.5s 2s;
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
