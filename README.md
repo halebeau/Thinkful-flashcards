@@ -16,4 +16,4 @@ This is a front-end application project built in React and Javascript that allow
 ## 🛠 Skills
 React, React Hooks, Javascript, CSS
 
-  
+![Screen Shot 2021-10-01 at 2 37 59 PM](https://user-images.githubusercontent.com/52841881/135688990-f9d4818f-c167-4f94-b683-6aa54fae0cfe.png)
